@@ -86,4 +86,4 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 ---
 
-For more information or issues, please refer to the [Issues](https://github.com/username/repository-name/issues).
+For more information or issues, please refer to the [Issues](https://github.com/EhsanShafi3i/Cyberpunk-To-Do-list/issues).
