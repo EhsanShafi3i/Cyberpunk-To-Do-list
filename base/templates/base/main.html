@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #00ffff;
+            font-family: 'Orbitron', sans-serif;
+            padding-top: 50px;
+            text-align: center;
+            cursor: url('https://cdn.pixabay.com/photo/2016/12/29/11/32/mouse-1935264_960_720.png'), auto;
+            transition: background-color 0.3s;
+        }
+
+        body:hover {
+            background-color: #1a1a1a;
+        }
+
+        .container {
+            max-width: 60%;
+            margin: auto;
+            background-color: #1a1a1a;
+            box-shadow: 0px 0px 20px 10px rgba(0, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ff00ff;
+            position: relative;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .container:hover {
+            transform: rotateX(5deg) rotateY(-5deg) scale(1.05);
+            box-shadow: 0px 0px 30px 15px rgba(0, 255, 255, 0.7);
+        }
+
+        h1, h3 {
+            color: #ff00ff;
+        }
+
+        a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        a:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        input[type="submit"], input[type="text"], input[type="password"], textarea {
+            background-color: #00ffff;
+            color: #121212;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="submit"]:hover, input[type="text"]:hover, input[type="password"]:hover, textarea:hover {
+            background-color: #ff00ff;
+            color: #121212;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #00ffff;
+        }
+
+        th {
+            background-color: #2a2a2a;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #00ffff;
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .footer a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        .footer .footer-text {
+            color: #00ffff;
+            font-size: 14px;
+        }
+
+        .goback {
+            display: none;
+        }
+
+        .show-goback .goback {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container {% if show_go_back %}show-goback{% endif %}">
+        {% block content %}
+        {% endblock content %}
+        <div class="footer">
+            {% if request.user.is_authenticated %}
+            <p>{{ request.user }}</p>
+            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:none;">
+                {% csrf_token %}
+            </form>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Logout
+            </a>
+            {% endif %}
+            <a href="{% url 'tasks' %}" class="goback">Go Back</a>
+        </div>
+    </div>
+    <footer class="footer">
+        <p class="footer-text">Created by Ehsanshafi3i</p>
+    </footer>
+
+    <script>
+        document.addEventListener('mousemove', function (e) {
+            var x = e.clientX / window.innerWidth;
+            var y = e.clientY / window.innerHeight;
+            var container = document.querySelector('.container');
+
+            container.style.transform = `rotateX(${y * 20 - 10}deg) rotateY(${x * 20 - 10}deg) scale(1.05)`;
+        });
+    </script>
+</body>
+
+</html>
